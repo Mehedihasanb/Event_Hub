@@ -1,0 +1,63 @@
+:root {
+  --eh-primary: #3d5a80;
+  --eh-primary-dark: #2c4560;
+  --eh-accent: #ee6c4d;
+  --eh-bg: #f8fafc;
+  --eh-card: #ffffff;
+  --eh-text: #1e293b;
+  --eh-muted: #64748b;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--eh-bg);
+  color: var(--eh-text);
+  min-height: 100vh;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--eh-primary);
+  --bs-btn-border-color: var(--eh-primary);
+  --bs-btn-hover-bg: var(--eh-primary-dark);
+  --bs-btn-hover-border-color: var(--eh-primary-dark);
+}
+
+.btn-accent {
+  background: var(--eh-accent);
+  border-color: var(--eh-accent);
+  color: #fff;
+}
+
+.btn-accent:hover {
+  filter: brightness(0.95);
+  color: #fff;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.eh-hero {
+  background: linear-gradient(135deg, var(--eh-primary) 0%, #293241 100%);
+  color: #fff;
+  border-radius: 1rem;
+  padding: 2.5rem 2rem;
+}
+
+.eh-card {
+  border: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.eh-muted {
+  color: var(--eh-muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 576px) {
+  .eh-hero {
+    padding: 1.5rem 1.25rem;
+  }
+}

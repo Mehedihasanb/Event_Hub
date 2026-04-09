@@ -1,0 +1,55 @@
+services:
+    nginx:
+        image: nginx:latest
+        ports:
+            - "80:80"
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf
+            - ./app:/app
+    php:
+        build:
+            context: .
+            dockerfile: PHP.Dockerfile
+        volumes:
+            - ./app:/app
+        environment:
+            MYSQL_HOST: mysql
+            MYSQL_DATABASE: developmentdb
+            MYSQL_USER: developer
+            MYSQL_PASSWORD: secret123
+            JWT_SECRET: dev-change-me-use-long-random-string
+            STRIPE_SECRET_KEY: ""
+        depends_on:
+            - mysql
+    mysql:
+        image: mariadb:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: 'secret123'
+            MYSQL_USER: 'developer'
+            MYSQL_PASSWORD: 'secret123'
+            MYSQL_DATABASE: 'developmentdb'
+        volumes:
+            - mysqldata:/var/lib/mysql
+            - ./database/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+        ports:
+            - 3306:3306
+    phpmyadmin:
+        image: phpmyadmin:latest
+        ports:
+            - 8080:80
+        environment:
+            - PMA_HOST=mysql
+    vite:
+        image: node:20-bookworm
+        working_dir: /app
+        ports:
+            - "5173:5173"
+        volumes:
+            - ./frontend:/app
+        environment:
+            VITE_API_TARGET: http://nginx:80
+        command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
+        depends_on:
+            - nginx
+volumes:
+    mysqldata: {}
